@@ -92,3 +92,4 @@ Append-only. Do not edit entries.
 - `2026-05-25T07:14:49.309Z` saved paper: [[2605.23892]] — Good Token Hunting: A Hitchhiker's Guide to Token Selection for Visual Geometry Transformers
 - `2026-05-25T07:20:14.655Z` saved paper: [[2605.23892]] — Good Token Hunting: A Hitchhiker's Guide to Token Selection for Visual Geometry Transformers
 - `2026-05-25T07:20:23.899Z` saved paper: [[2605.23889]] — HorizonStream: Long-Horizon Attention for Streaming 3D Reconstruction
+- `2026-05-25T07:27:01.023Z` saved paper: [[2605.23895]] — From Activation to Causality: Discovery of Causal Visual Representations in the Human Brain
