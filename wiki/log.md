@@ -1,0 +1,89 @@
+# Wiki Activity Log
+
+Append-only. Do not edit entries.
+
+
+- `2026-05-19T06:00:34.640Z` saved paper: [[2605.18750]] — A Readiness-Driven Runtime for Pipeline-Parallel Training under Runtime Variability
+- `2026-05-19T06:00:34.640Z` saved paper: [[2605.07718]] — Exploring the Potential of Ternary Blending for Two and Three-Junction RAINBOW Solar Cells
+- `2026-05-19T06:00:34.640Z` saved paper: [[2605.18753]] — DashAttention: Differentiable and Adaptive Sparse Hierarchical Attention
+- `2026-05-19T06:00:34.639Z` saved paper: [[2510.26745]] — Deep sequence models tend to memorize geometrically; it is unclear why
+- `2026-05-19T08:50:35.927Z` saved paper: [[2605.18754]] — Can These Views Be One Scene? Evaluating Multiview 3D Consistency when 3D Foundation Models Hallucinate
+- `2026-05-19T08:50:35.927Z` saved paper: [[2605.18753]] — DashAttention: Differentiable and Adaptive Sparse Hierarchical Attention
+- `2026-05-19T08:50:35.945Z` saved paper: [[2605.18752]] — Traditional statistical representations outperform generative AI in identifying expert peer reviewers
+- `2026-05-19T08:50:35.946Z` saved paper: [[2605.18750]] — A Readiness-Driven Runtime for Pipeline-Parallel Training under Runtime Variability
+- `2026-05-19T08:50:35.946Z` saved paper: [[2605.18747]] — Code as Agent Harness
+- `2026-05-19T08:50:35.947Z` saved paper: [[2605.18746]] — ESI-Bench: Towards Embodied Spatial Intelligence that Closes the Perception-Action Loop
+- `2026-05-19T08:50:35.989Z` saved paper: [[2605.18742]] — A universal framework to identify eccentric binary mergers: GW200105 case study
+- `2026-05-19T08:50:35.989Z` saved paper: [[2605.18741]] — Robust Simulation Based Inference Through Robust Optimal Transport
+- `2026-05-19T08:50:35.999Z` saved paper: [[2605.18740]] — Vision-OPD: Learning to See Fine Details for Multimodal LLMs via On-Policy Self-Distillation
+- `2026-05-19T08:50:35.999Z` saved paper: [[2605.18739]] — LongLive-2.0: An NVFP4 Parallel Infrastructure for Long Video Generation
+- `2026-05-19T08:50:38.768Z` saved paper: [[2605.18754]] — Can These Views Be One Scene? Evaluating Multiview 3D Consistency when 3D Foundation Models Hallucinate
+- `2026-05-19T08:50:38.770Z` saved paper: [[2605.18753]] — DashAttention: Differentiable and Adaptive Sparse Hierarchical Attention
+- `2026-05-19T08:50:38.770Z` saved paper: [[2605.18752]] — Traditional statistical representations outperform generative AI in identifying expert peer reviewers
+- `2026-05-19T08:50:38.770Z` saved paper: [[2605.18750]] — A Readiness-Driven Runtime for Pipeline-Parallel Training under Runtime Variability
+- `2026-05-19T08:50:38.770Z` saved paper: [[2605.18747]] — Code as Agent Harness
+- `2026-05-19T08:50:38.781Z` saved paper: [[2605.18746]] — ESI-Bench: Towards Embodied Spatial Intelligence that Closes the Perception-Action Loop
+- `2026-05-19T08:50:38.798Z` saved paper: [[2605.18742]] — A universal framework to identify eccentric binary mergers: GW200105 case study
+- `2026-05-19T08:50:38.798Z` saved paper: [[2605.18740]] — Vision-OPD: Learning to See Fine Details for Multimodal LLMs via On-Policy Self-Distillation
+- `2026-05-19T08:50:38.798Z` saved paper: [[2605.18739]] — LongLive-2.0: An NVFP4 Parallel Infrastructure for Long Video Generation
+- `2026-05-19T08:50:38.798Z` saved paper: [[2605.18741]] — Robust Simulation Based Inference Through Robust Optimal Transport
+- `2026-05-19T08:51:15.647Z` saved paper: [[2605.18754]] — Can These Views Be One Scene? Evaluating Multiview 3D Consistency when 3D Foundation Models Hallucinate
+- `2026-05-19T08:51:15.656Z` saved paper: [[2605.18753]] — DashAttention: Differentiable and Adaptive Sparse Hierarchical Attention
+- `2026-05-19T08:51:15.662Z` saved paper: [[2605.18752]] — Traditional statistical representations outperform generative AI in identifying expert peer reviewers
+- `2026-05-19T08:51:15.666Z` saved paper: [[2605.18750]] — A Readiness-Driven Runtime for Pipeline-Parallel Training under Runtime Variability
+- `2026-05-19T08:51:15.671Z` saved paper: [[2605.18747]] — Code as Agent Harness
+- `2026-05-19T08:51:15.676Z` saved paper: [[2605.18746]] — ESI-Bench: Towards Embodied Spatial Intelligence that Closes the Perception-Action Loop
+- `2026-05-19T08:51:15.700Z` saved paper: [[2605.18742]] — A universal framework to identify eccentric binary mergers: GW200105 case study
+- `2026-05-19T08:51:15.703Z` saved paper: [[2605.18741]] — Robust Simulation Based Inference Through Robust Optimal Transport
+- `2026-05-19T08:51:15.719Z` saved paper: [[2605.18740]] — Vision-OPD: Learning to See Fine Details for Multimodal LLMs via On-Policy Self-Distillation
+- `2026-05-19T08:51:15.723Z` saved paper: [[2605.18739]] — LongLive-2.0: An NVFP4 Parallel Infrastructure for Long Video Generation
+- `2026-05-19T08:51:15.725Z` saved paper: [[2510.26745]] — Deep sequence models tend to memorize geometrically; it is unclear why
+- `2026-05-19T08:51:15.725Z` saved paper: [[2605.07718]] — Exploring the Potential of Ternary Blending for Two and Three-Junction RAINBOW Solar Cells
+- `2026-05-19T08:51:15.758Z` saved paper: [[2603.04727]] — Are Multimodal LLMs Ready for Surveillance? A Reality Check on Zero-Shot Anomaly Detection in the Wild
+- `2026-05-19T08:51:15.762Z` saved paper: [[2605.18738]] — What Does the AI Doctor Value? Auditing Pluralism in the Clinical Ethics of Language Models
+- `2026-05-19T08:51:15.768Z` saved paper: [[2605.18734]] — EgoExoMem: Cross-View Memory Reasoning over Synchronized Egocentric and Exocentric Videos
+- `2026-05-19T08:51:15.774Z` saved paper: [[2605.18733]] — Advancing Narrative Long Video Generation via Training-Free Identity-Aware Memory
+- `2026-05-19T08:51:15.775Z` saved paper: [[2503.02574]] — LLM-Safety Evaluations Lack Robustness
+- `2026-05-19T08:51:15.777Z` saved paper: [[2604.03212]] — ProtoFlow: Mitigating Forgetting in Class-Incremental Remote Sensing Segmentation via Low-Curvature Prototype Flow
+- `2026-05-19T08:51:15.790Z` saved paper: [[2605.18732]] — Predictable Confabulations: Factual Recall by LLMs Scales with Model Size and Topic Frequency
+- `2026-05-19T08:51:15.790Z` saved paper: [[2605.18731]] — Pulse profile modelling of the 2024 outburst of the accreting millisecond pulsar SRGA J144459.2-604207
+- `2026-05-19T08:55:52.193Z` saved paper: [[2605.18734]] — EgoExoMem: Cross-View Memory Reasoning over Synchronized Egocentric and Exocentric Videos
+- `2026-05-19T08:55:52.202Z` saved paper: [[2502.20969]] — TeleRAG: Efficient Retrieval-Augmented Generation Inference with Lookahead Retrieval
+- `2026-05-19T08:55:52.215Z` saved paper: [[2605.12012]] — LegalCheck: Retrieval- and Context-Augmented Generation for Drafting Municipal Legal Advice Letters
+- `2026-05-19T08:55:52.217Z` saved paper: [[2605.18570]] — Query-Conditioned Knowledge Alignment for Reliable Cross-System Medical Reasoning
+- `2026-05-19T08:55:52.220Z` saved paper: [[2605.18565]] — LongMINT: Evaluating Memory under Multi-Target Interference in Long-Horizon Agent Systems
+- `2026-05-19T08:55:52.264Z` saved paper: [[2605.18490]] — Vector RAG vs LLM-Compiled Wiki: A Preregistered Comparison on a Small Multi-Domain Research
+- `2026-05-19T08:55:52.267Z` saved paper: [[2510.21712]] — DecoupleSearch: Decouple Planning and Search via Hierarchical Reward Modeling
+- `2026-05-19T08:55:52.272Z` saved paper: [[2605.18271]] — From Volume to Value: Preference-Aligned Memory Construction for On-Device RAG
+- `2026-05-19T08:55:52.276Z` saved paper: [[2605.18226]] — Context Memorization for Efficient Long Context Generation
+- `2026-05-19T08:55:52.276Z` saved paper: [[2605.18153]] — Three Heads Are Better Than One: A Multi-perspective Reasoning Framework for Enhanced Vulnerability Detection
+- `2026-05-19T08:55:52.290Z` saved paper: [[2605.17989]] — Predictive Prefetching for Retrieval-Augmented Generation
+- `2026-05-19T08:55:52.291Z` saved paper: [[2605.17965]] — BLAgent: Agentic RAG for File-Level Bug Localization
+- `2026-05-19T08:55:52.301Z` saved paper: [[2605.17960]] — From Detection to Response: A Deep Learning and Retrieval-Augmented Generation Framework for Network Intrusion Mitigation
+- `2026-05-19T08:55:52.303Z` saved paper: [[2605.17946]] — SVFSearch: A Multimodal Knowledge-Intensive Benchmark for Short-Video Frame Search in the Gaming Vertical Domain
+- `2026-05-19T08:55:52.303Z` saved paper: [[2604.23355]] — LEGO: An LLM Skill-Based Front-End Design Generation Platform
+- `2026-05-19T08:55:52.313Z` saved paper: [[2605.17902]] — LAST-RAG: Literature-Anchored Stochastic Trajectory Retrieval-Augmented Generation for Knowledge-Conditioned Degradation Model Selection
+- `2026-05-19T08:55:52.314Z` saved paper: [[2504.20734]] — UniversalRAG: Retrieval-Augmented Generation over Corpora of Diverse Modalities and Granularities
+- `2026-05-19T08:55:52.325Z` saved paper: [[2512.19134]] — QuCo-RAG: Quantifying Uncertainty from the Pre-training Corpus for Dynamic Retrieval-Augmented Generation
+- `2026-05-19T08:55:52.331Z` saved paper: [[2511.21016]] — Gated KalmaNet: A Fading Memory Layer Through Test-Time Ridge Regression
+- `2026-05-19T08:55:52.332Z` saved paper: [[2605.17625]] — Episodic-Semantic Memory Architecture for Long-Horizon Scientific Agents
+- `2026-05-19T08:55:52.347Z` saved paper: [[2404.16130]] — From Local to Global: A Graph RAG Approach to Query-Focused Summarization
+- `2026-05-19T08:55:52.347Z` saved paper: [[2310.11511]] — Self-RAG: Learning to Retrieve, Generate, and Critique through Self-Reflection
+- `2026-05-19T08:55:52.358Z` saved paper: [[2502.14802]] — From RAG to Memory: Non-Parametric Continual Learning for Large Language Models
+- `2026-05-19T08:55:52.369Z` saved paper: [[2501.09136]] — Agentic Retrieval-Augmented Generation: A Survey on Agentic RAG
+- `2026-05-19T08:55:52.369Z` saved paper: [[2403.14403]] — Adaptive-RAG: Learning to Adapt Retrieval-Augmented Large Language Models through Question Complexity
+- `2026-05-19T08:55:52.374Z` saved paper: [[2502.11371]] — RAG vs. GraphRAG: A Systematic Evaluation and Key Insights
+- `2026-05-19T08:55:52.376Z` saved paper: [[2403.10131]] — RAFT: Adapting Language Model to Domain Specific RAG
+- `2026-05-19T08:55:52.405Z` saved paper: [[2401.15391]] — MultiHop-RAG: Benchmarking Retrieval-Augmented Generation for Multi-Hop Queries
+- `2026-05-19T08:55:52.415Z` saved paper: [[2402.16893]] — The Good and The Bad: Exploring Privacy Issues in Retrieval-Augmented Generation (RAG)
+- `2026-05-19T08:55:52.415Z` saved paper: [[2405.06211]] — A Survey on RAG Meeting LLMs: Towards Retrieval-Augmented Large Language Models
+- `2026-05-19T08:55:52.419Z` saved paper: [[2505.14069]] — Process vs. Outcome Reward: Which is Better for Agentic RAG Reinforcement Learning
+- `2026-05-19T08:55:52.422Z` saved paper: [[2505.22019]] — VRAG-RL: Empower Vision-Perception-Based RAG for Visually Rich Information Understanding via Iterative Reasoning with Reinforcement Learning
+- `2026-05-19T08:55:52.429Z` saved paper: [[2503.04338]] — In-depth Analysis of Graph-based RAG in a Unified Framework
+- `2026-05-19T08:55:52.437Z` saved paper: [[2401.14887]] — The Power of Noise: Redefining Retrieval for RAG Systems
+- `2026-05-19T08:55:52.437Z` saved paper: [[2404.00610]] — RQ-RAG: Learning to Refine Queries for Retrieval Augmented Generation
+- `2026-05-19T08:55:52.441Z` saved paper: [[2501.11759]] — Poison-RAG: Adversarial Data Poisoning Attacks on Retrieval-Augmented Generation in Recommender Systems
+- `2026-05-19T08:55:52.445Z` saved paper: [[2405.20139]] — GNN-RAG: Graph Neural Retrieval for Large Language Model Reasoning
+- `2026-05-19T08:55:52.456Z` saved paper: [[2504.06279]] — Financial Analysis: Intelligent Financial Data Analysis System Based on LLM-RAG
+- `2026-05-19T08:55:52.457Z` saved paper: [[2504.15909]] — Synergizing RAG and Reasoning: A Systematic Review
+- `2026-05-24T11:53:50Z` draft | llm-wiki-system-architecture | output: public/output/llm-wiki-system-architecture.pdf

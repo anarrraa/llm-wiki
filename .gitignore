@@ -1,0 +1,14 @@
+.env
+.env.local
+.next/
+node_modules/
+public/output/*.pdf
+public/output/*.tex
+public/output/*.aux
+public/output/*.log
+latex/output/
+*.aux
+*.log
+*.out
+*.toc
+*.synctex.gz

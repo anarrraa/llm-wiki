@@ -1,0 +1,251 @@
+# Entity schema — defines frontmatter fields for each wiki entity kind.
+# Fields marked required: true must be present; optional fields default to the value shown.
+# Lifecycle enums define valid values for the `status` field.
+
+entities:
+
+  papers:
+    required:
+      - kind
+      - title
+      - slug
+      - status
+    optional:
+      arxiv_id: ""
+      arxiv_url: ""
+      pdf_url: ""
+      venue: ""
+      year: null
+      authors: []
+      category: ""
+      published: ""
+      added: ""
+      importance: 0          # 0-3: 0=unrated, 1=peripheral, 2=relevant, 3=core
+      tldr: ""
+      contribution_type: ""  # empirical | theoretical | survey | system | position
+      datasets: []
+      cited_by: 0
+      tags: []
+    lifecycle:
+      - discovered
+      - read
+      - ingested
+      - skipped
+    body_sections:
+      - "## Abstract"
+      - "## Problem & Context"
+      - "## Key Idea"
+      - "## Method"
+      - "## Experiments & Results"
+      - "## Limitations"
+      - "## Open Questions"
+      - "## My Take"
+      - "## Related"
+      - "## Notes"
+
+  concepts:
+    required:
+      - kind
+      - title
+      - slug
+      - status
+    optional:
+      aliases: []
+      maturity: emerging      # emerging | active | stable | deprecated
+      key_papers: []
+      related_concepts: []
+      linked_ideas: []
+      linked_topics: []
+      definition: ""
+    lifecycle:
+      - emerging
+      - active
+      - stable
+      - deprecated
+    body_sections:
+      - "## Definition"
+      - "## Why It Matters"
+      - "## Key Variants"
+      - "## Open Problems"
+      - "## Notes"
+
+  topics:
+    required:
+      - kind
+      - title
+      - slug
+      - status
+    optional:
+      description: ""
+      key_venues: []
+      related_topics: []
+      key_people: []
+      linked_ideas: []
+      linked_concepts: []
+    lifecycle:
+      - active
+      - dormant
+      - deprecated
+    body_sections:
+      - "## Overview"
+      - "## Key Themes"
+      - "## Key Venues"
+      - "## Open Problems"
+      - "## Notes"
+
+  ideas:
+    required:
+      - kind
+      - title
+      - slug
+      - status
+    optional:
+      origin_gaps: []
+      novelty_score: 0       # 0-3: 0=unrated
+      priority: medium       # low | medium | high | critical
+      linked_experiments: []
+      linked_concepts: []
+      linked_papers: []
+      target_venue: ""
+    lifecycle:
+      - proposed
+      - in_progress
+      - tested
+      - validated
+      - failed
+      - abandoned
+    body_sections:
+      - "## Motivation"
+      - "## Hypothesis"
+      - "## Approach Sketch"
+      - "## Novelty Argument"
+      - "## Target Venue"
+      - "## Risks"
+      - "## Pilot Results"
+      - "## Lessons Learned"
+      - "## Notes"
+
+  experiments:
+    required:
+      - kind
+      - title
+      - slug
+      - status
+      - linked_idea
+    optional:
+      hypothesis: ""
+      metrics: []
+      baseline: ""
+      outcome: ""            # positive | negative | inconclusive | error
+      key_result: ""
+      date_started: ""
+      date_completed: ""
+      compute_hours: 0
+      remote: false
+      script_path: ""
+    lifecycle:
+      - planned
+      - running
+      - completed
+      - failed
+      - abandoned
+    body_sections:
+      - "## Hypothesis"
+      - "## Setup"
+      - "## Baseline"
+      - "## Metrics"
+      - "## Results"
+      - "## Analysis"
+      - "## Next Steps"
+      - "## Notes"
+
+  methods:
+    required:
+      - kind
+      - title
+      - slug
+      - status
+    optional:
+      type: ""               # architecture | training | inference | evaluation | data
+      source_papers: []
+      parent_methods: []
+      child_methods: []
+      related_concepts: []
+      pseudocode: ""
+      complexity: ""
+    lifecycle:
+      - emerging
+      - active
+      - stable
+      - superseded
+      - deprecated
+    body_sections:
+      - "## Description"
+      - "## Pseudocode / Algorithm"
+      - "## Variants"
+      - "## Strengths & Weaknesses"
+      - "## Notes"
+
+  people:
+    required:
+      - kind
+      - title
+      - slug
+      - status
+    optional:
+      affiliation: ""
+      research_areas: []
+      key_papers: []
+      website: ""
+      type:
+        kind: researcher     # researcher | practitioner | both
+    lifecycle:
+      - active
+      - inactive
+    body_sections:
+      - "## Research Focus"
+      - "## Key Contributions"
+      - "## Notes"
+
+  foundations:
+    required:
+      - kind
+      - title
+      - slug
+      - status
+      - domain
+    optional:
+      prerequisites: []
+      related_foundations: []
+      key_references: []
+    lifecycle:
+      - draft
+      - stable
+    body_sections:
+      - "## Core Idea"
+      - "## Formal Definition"
+      - "## Intuition"
+      - "## Key Results"
+      - "## Connections"
+      - "## References"
+      - "## Notes"
+
+  Summary:
+    required:
+      - kind
+      - title
+      - slug
+      - status
+      - scope
+    optional:
+      key_topics: []
+      date_generated: ""
+    lifecycle:
+      - draft
+      - published
+    body_sections:
+      - "## Scope"
+      - "## Key Findings"
+      - "## Themes"
+      - "## Open Problems"
+      - "## Notes"

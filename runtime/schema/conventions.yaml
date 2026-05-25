@@ -1,0 +1,73 @@
+# Conventions — system-wide constants and ownership rules.
+
+slug:
+  rule: "^[a-z0-9]+(-[a-z0-9]+)*$"
+  max_length: 60
+  generation: "lowercase, replace non-alphanumeric with hyphens, collapse runs, trim"
+  arxiv_exception: "arXiv IDs use the pattern YYMM-NNNNN with no slash; replace / with -"
+
+paths:
+  entity_file:    "wiki/{kind}/{slug}.md"
+  edges:          "wiki/graph/edges.jsonl"
+  citations:      "wiki/graph/citations.jsonl"
+  context_brief:  "wiki/graph/context_brief.md"
+  open_questions: "wiki/graph/open_questions.md"
+  index:          "wiki/index.md"
+  log:            "wiki/log.md"
+  latex_output:   "public/output/{filename}.pdf"
+
+log:
+  format: "- `{ISO-8601}` {skill} | {action} | {detail}"
+  append_command: "python3 tools/research_wiki.py log wiki/ \"{message}\""
+
+ownership_zones:
+  user_owned:
+    - "raw/papers/"
+    - "raw/notes/"
+    - "raw/web/"
+  skill_writable:
+    - "raw/discovered/"
+    - "raw/tmp/"
+    - "wiki/"
+    - "latex/"
+    - "public/output/"
+  tools_only:
+    - "wiki/graph/context_brief.md"
+    - "wiki/graph/open_questions.md"
+  append_only:
+    - "wiki/log.md"
+    - "wiki/graph/edges.jsonl"
+    - "wiki/graph/citations.jsonl"
+
+entity_dirs:
+  - papers
+  - concepts
+  - topics
+  - ideas
+  - experiments
+  - methods
+  - people
+  - foundations
+  - Summary
+
+importance_scale:
+  0: "unrated"
+  1: "peripheral — mentioned but not core"
+  2: "relevant — shapes the approach"
+  3: "core — must cite, deeply read"
+
+novelty_scale:
+  0: "unrated"
+  1: "incremental — minor variation"
+  2: "moderate — non-obvious but in existing space"
+  3: "significant — genuinely new problem or method"
+
+latex:
+  compiler: "pdflatex"
+  compiler_path_env: "PDFLATEX_PATH"
+  compiler_path_default: "/usr/local/texlive/2026basic/bin/universal-darwin/pdflatex"
+  compile_passes: 2
+  output_dir: "public/output/"
+  template_dir: "latex/templates/"
+  api_endpoint: "http://localhost:3000/api/latex/compile"
+  generate_endpoint: "http://localhost:3000/api/latex/generate"

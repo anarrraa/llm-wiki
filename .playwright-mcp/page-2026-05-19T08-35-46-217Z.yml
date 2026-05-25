@@ -1,0 +1,90 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - complementary [ref=e3]:
+      - generic [ref=e4]:
+        - generic [ref=e5]:
+          - generic [ref=e6]: W
+          - generic [ref=e7]: llm-wiki
+        - paragraph [ref=e8]: knowledge graph
+      - generic [ref=e9]:
+        - paragraph [ref=e10]: Graph
+        - generic [ref=e11]:
+          - generic [ref=e12]:
+            - img [ref=e13]
+            - generic [ref=e15]: Papers
+            - generic [ref=e16]: —
+          - generic [ref=e17]:
+            - img [ref=e18]
+            - generic [ref=e20]: Concepts
+            - generic [ref=e21]: —
+          - generic [ref=e22]:
+            - img [ref=e23]
+            - generic [ref=e25]: Topics
+            - generic [ref=e26]: —
+          - generic [ref=e27]:
+            - img [ref=e28]
+            - generic [ref=e30]: Ideas
+            - generic [ref=e31]: —
+          - generic [ref=e32]:
+            - img [ref=e33]
+            - generic [ref=e35]: Experiments
+            - generic [ref=e36]: —
+          - generic [ref=e37]:
+            - img [ref=e38]
+            - generic [ref=e40]: Methods
+            - generic [ref=e41]: —
+          - generic [ref=e42]:
+            - img [ref=e43]
+            - generic [ref=e45]: People
+            - generic [ref=e46]: —
+          - generic [ref=e47]:
+            - img [ref=e48]
+            - generic [ref=e50]: Foundations
+            - generic [ref=e51]: —
+        - paragraph [ref=e53]: Search for papers to start building your wiki.
+      - generic [ref=e55]:
+        - img [ref=e56]
+        - generic [ref=e58]: TeX Live 2026
+    - main [ref=e59]:
+      - generic [ref=e61]:
+        - img [ref=e62]
+        - textbox "transformer attention mechanisms..." [ref=e64]
+        - button "Search" [disabled] [ref=e65]:
+          - generic [ref=e66]: Search
+          - img [ref=e67]
+      - generic [ref=e69]:
+        - generic [ref=e70]: Filter
+        - generic [ref=e71]:
+          - img [ref=e72]
+          - textbox "Search wiki notes…" [ref=e74]
+        - textbox "Year e.g. 2024" [ref=e75]
+        - combobox [ref=e76]:
+          - option "All fields" [selected]
+          - option "CS"
+          - option "Medicine"
+          - option "Physics"
+          - option "Biology"
+          - option "Economics"
+        - spinbutton [ref=e77]
+      - generic [ref=e79]:
+        - img [ref=e81]
+        - heading "Search arXiv" [level=2] [ref=e83]
+        - paragraph [ref=e84]: Enter a research topic to fetch recent papers. Select papers, then generate a LaTeX survey compiled to PDF.
+    - complementary [ref=e85]:
+      - generic [ref=e86]:
+        - button "Source" [ref=e87]:
+          - img [ref=e88]
+          - text: Source
+        - button "PDF" [disabled] [ref=e90]:
+          - img [ref=e91]
+          - text: PDF
+        - generic [ref=e93]:
+          - button "Copy LaTeX" [ref=e94]:
+            - img [ref=e95]
+          - button "Compile" [disabled] [ref=e97]:
+            - img [ref=e98]
+            - text: Compile
+      - textbox "LaTeX source will appear here after generation…" [ref=e102]: "\\documentclass[12pt,a4paper]{article} \\usepackage{amsmath,amssymb,amsthm} \\usepackage{hyperref} \\usepackage{geometry} \\usepackage{natbib} \\usepackage{booktabs} \\usepackage{graphicx} \\geometry{margin=1in} \\title{Your Research Title} \\author{Author Name} \\date{\\today} \\begin{document} \\maketitle \\begin{abstract} Write your abstract here. Summarize the key contributions and findings of your work in 150--200 words. \\end{abstract} \\section{Introduction} Introduce your topic and motivate the work. \\section{Background} Review relevant prior work. \\section{Methods} Describe your approach. \\section{Results} Present your findings. \\section{Conclusion} Summarize contributions and future directions. \\end{document}"
+      - generic [ref=e104]: template
+  - button "Open Next.js Dev Tools" [ref=e110] [cursor=pointer]:
+    - img [ref=e111]

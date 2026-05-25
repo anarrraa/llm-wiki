@@ -1,0 +1,45 @@
+# Cross-reference rules — every forward link requires a simultaneous reverse write.
+# Format: when field X in entity A is written, also write field Y in entity B.
+
+rules:
+
+  - name: paper_introduces_concept
+    description: "When a paper writes `introduces_concept` edge to a concept, add paper slug to concept.key_papers"
+    forward:  {entity: papers,   field: introduces_concept}
+    reverse:  {entity: concepts, field: key_papers}
+
+  - name: paper_uses_concept
+    description: "When a paper writes `uses_concept` edge, add paper slug to concept.key_papers"
+    forward:  {entity: papers,   field: uses_concept}
+    reverse:  {entity: concepts, field: key_papers}
+
+  - name: topic_key_people
+    description: "When a topic lists a person in key_people, add topic slug to person.research_areas"
+    forward:  {entity: topics,   field: key_people}
+    reverse:  {entity: people,   field: research_areas}
+
+  - name: idea_origin_gaps
+    description: "When an idea lists a concept in origin_gaps, add idea slug to concept.linked_ideas"
+    forward:  {entity: ideas,    field: origin_gaps}
+    reverse:  {entity: concepts, field: linked_ideas}
+
+  - name: idea_linked_experiments
+    description: "When an experiment links to an idea, add experiment slug to idea.linked_experiments"
+    forward:  {entity: experiments, field: linked_idea}
+    reverse:  {entity: ideas,       field: linked_experiments}
+
+  - name: method_source_papers
+    description: "When a method cites source papers, add method slug to paper.Related section"
+    forward:  {entity: methods,  field: source_papers}
+    reverse:  {entity: papers,   section: "## Related"}
+    note: "Add [[method-slug]] wiki-link in paper's Related section"
+
+  - name: idea_inspired_by
+    description: "When an idea writes inspired_by to a paper, note in paper's My Take section"
+    forward:  {entity: ideas,    field: inspired_by_papers}
+    reverse:  {entity: papers,   section: "## My Take"}
+    note: "Append '> Inspired idea: [[idea-slug]]' in paper's My Take"
+
+terminal_entities:
+  - foundations
+  # foundations have no reverse links — they are background knowledge nodes

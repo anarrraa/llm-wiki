@@ -1,0 +1,197 @@
+# Edge schema — defines typed relationships between wiki entities.
+# direction: directed | symmetric
+# confidence: required on semantic edges (high | medium | low)
+# evidence: short string quoting the text that supports this edge
+
+edges:
+
+  # ── Paper ↔ Paper (semantic) ──────────────────────────────────────────────
+
+  builds_on:
+    endpoints: [papers, papers]
+    direction: directed
+    description: "A extends B's method, framework, or results"
+    attributes:
+      confidence: {required: true, values: [high, medium, low]}
+      evidence: {required: false}
+
+  improves_on:
+    endpoints: [papers, papers]
+    direction: directed
+    description: "A reports strictly better results than B on the same task"
+    attributes:
+      confidence: {required: true, values: [high, medium, low]}
+      evidence: {required: false}
+
+  compares_against:
+    endpoints: [papers, papers]
+    direction: directed
+    description: "A includes B as a baseline in experiments"
+    attributes:
+      confidence: {required: true, values: [high, medium, low]}
+
+  challenges:
+    endpoints: [papers, papers]
+    direction: directed
+    description: "A presents evidence or argument against B's claims"
+    attributes:
+      confidence: {required: true, values: [high, medium, low]}
+      evidence: {required: false}
+
+  surveys:
+    endpoints: [papers, papers]
+    direction: directed
+    description: "A is a survey that covers B"
+    attributes:
+      confidence: {required: false}
+
+  same_problem_as:
+    endpoints: [papers, papers]
+    direction: symmetric
+    description: "A and B address the same problem from different angles"
+    attributes:
+      confidence: {required: true, values: [high, medium, low]}
+
+  similar_method_to:
+    endpoints: [papers, papers]
+    direction: symmetric
+    description: "A and B use substantially similar technical approaches"
+    attributes:
+      confidence: {required: true, values: [high, medium, low]}
+
+  complementary_to:
+    endpoints: [papers, papers]
+    direction: symmetric
+    description: "A and B could be combined to produce a stronger result"
+    attributes:
+      confidence: {required: true, values: [high, medium, low]}
+
+  # ── Paper → Concept ───────────────────────────────────────────────────────
+
+  introduces_concept:
+    endpoints: [papers, concepts]
+    direction: directed
+    description: "A is the originating paper for concept B"
+    attributes:
+      confidence: {required: false}
+
+  uses_concept:
+    endpoints: [papers, concepts]
+    direction: directed
+    description: "A applies concept B but did not originate it"
+    attributes:
+      confidence: {required: false}
+
+  extends_concept:
+    endpoints: [papers, concepts]
+    direction: directed
+    description: "A significantly extends or generalises concept B"
+    attributes:
+      confidence: {required: false}
+
+  critiques_concept:
+    endpoints: [papers, concepts]
+    direction: directed
+    description: "A challenges the validity or scope of concept B"
+    attributes:
+      confidence: {required: true, values: [high, medium, low]}
+      evidence: {required: false}
+
+  # ── Idea workflow ─────────────────────────────────────────────────────────
+
+  addresses_gap:
+    endpoints: [ideas, concepts]
+    direction: directed
+    description: "Idea A targets a gap identified in concept B"
+    attributes:
+      confidence: {required: false}
+
+  inspired_by:
+    endpoints: [ideas, papers]
+    direction: directed
+    description: "Idea A was inspired by paper B"
+    attributes:
+      confidence: {required: false}
+
+  derived_from:
+    endpoints: [ideas, ideas]
+    direction: directed
+    description: "Idea A is a refinement or specialisation of idea B"
+    attributes:
+      confidence: {required: false}
+
+  # ── Experiment ↔ Idea ─────────────────────────────────────────────────────
+
+  tested_by:
+    endpoints: [ideas, experiments]
+    direction: directed
+    description: "Idea A is empirically tested by experiment B"
+    attributes:
+      confidence: {required: false}
+
+  supports:
+    endpoints: [experiments, ideas]
+    direction: directed
+    description: "Experiment A produces evidence supporting idea B"
+    attributes:
+      confidence: {required: true, values: [high, medium, low]}
+      evidence: {required: false}
+
+  contradicts:
+    endpoints: [experiments, ideas]
+    direction: directed
+    description: "Experiment A produces evidence contradicting idea B"
+    attributes:
+      confidence: {required: true, values: [high, medium, low]}
+      evidence: {required: false}
+
+  invalidates:
+    endpoints: [experiments, ideas]
+    direction: directed
+    description: "Experiment A conclusively invalidates idea B's hypothesis"
+    attributes:
+      confidence: {required: true, values: [high, medium, low]}
+      evidence: {required: false}
+
+  # ── Method edges ──────────────────────────────────────────────────────────
+
+  implements:
+    endpoints: [papers, methods]
+    direction: directed
+    description: "Paper A provides the canonical implementation of method B"
+    attributes:
+      confidence: {required: false}
+
+  uses_method:
+    endpoints: [papers, methods]
+    direction: directed
+    description: "Paper A applies method B in its experiments"
+    attributes:
+      confidence: {required: false}
+
+  extends_method:
+    endpoints: [methods, methods]
+    direction: directed
+    description: "Method A extends or specialises method B"
+    attributes:
+      confidence: {required: false}
+
+  # ── People edges ──────────────────────────────────────────────────────────
+
+  authored_by:
+    endpoints: [papers, people]
+    direction: directed
+    description: "Paper A was written by researcher B"
+    attributes:
+      confidence: {required: false}
+
+  # ── Bibliographic ─────────────────────────────────────────────────────────
+
+  cites:
+    endpoints: [papers, papers]
+    direction: directed
+    description: "Bibliographic citation — A's reference list includes B"
+    storage: citations.jsonl
+    attributes:
+      source: {required: false}    # semantic_scholar | manual | arxiv
+      confidence: {required: false}

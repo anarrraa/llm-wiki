@@ -1,0 +1,76 @@
+# Writers policy — which skill may write which field or edge type.
+# Skills not listed for a field must NOT write it.
+# "any" means any skill may write it.
+
+fields:
+
+  papers:
+    slug:               [ingest]         # set once at ingest; frozen thereafter
+    status:             [ingest, check]
+    importance:         [ingest, review, any]
+    tldr:               [ingest, survey, draft]
+    contribution_type:  [ingest]
+    datasets:           [ingest]
+    cited_by:           [cite, check]
+    tags:               [ingest, any]
+
+  concepts:
+    maturity:           [ingest, check, any]
+    definition:         [prefill, ingest, any]
+    key_papers:         [ingest]         # maintained by xref rule
+    linked_ideas:       [ideate]         # maintained by xref rule
+
+  topics:
+    description:        [prefill, any]
+    key_venues:         [prefill, any]
+    key_people:         [prefill, ingest, any]
+    linked_ideas:       [ideate]
+
+  ideas:
+    status:             [ideate, review, any]
+    novelty_score:      [ideate, review]
+    priority:           [ideate, any]
+    linked_experiments: [ideate]         # maintained by xref rule
+    origin_gaps:        [ideate]
+
+  experiments:
+    status:             [ideate, any]
+    outcome:            [any]
+    key_result:         [any]
+    date_completed:     [any]
+    hypothesis:         [ideate, any]
+
+  methods:
+    type:               [ingest, any]
+    source_papers:      [ingest]
+
+  people:
+    research_areas:     [ingest, prefill, any]
+    key_papers:         [ingest, any]
+    affiliation:        [ingest, any]
+
+edges:
+  builds_on:            [ingest, survey, draft, any]
+  improves_on:          [ingest, any]
+  compares_against:     [ingest, any]
+  challenges:           [ingest, review, any]
+  surveys:              [survey, ingest]
+  same_problem_as:      [ingest, discover, any]
+  similar_method_to:    [ingest, discover, any]
+  complementary_to:     [ingest, discover, any]
+  introduces_concept:   [ingest]
+  uses_concept:         [ingest, any]
+  extends_concept:      [ingest, any]
+  critiques_concept:    [ingest, review]
+  addresses_gap:        [ideate]
+  inspired_by:          [ideate]
+  derived_from:         [ideate]
+  tested_by:            [ideate]
+  supports:             [any]
+  contradicts:          [any]
+  invalidates:          [any]
+  implements:           [ingest, any]
+  uses_method:          [ingest, any]
+  extends_method:       [ingest, any]
+  authored_by:          [ingest]
+  cites:                [cite, ingest]
