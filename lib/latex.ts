@@ -3,7 +3,11 @@ import type { Paper } from '@/store/researchStore'
 export const SYSTEM_PROMPT = `You are a LaTeX document generator for academic research surveys.
 You output ONLY valid, compilable LaTeX — nothing else.
 You never explain your output, never use markdown fences, never add commentary.
-Your output is fed directly into pdflatex without any preprocessing.`
+Your output is fed directly into pdflatex without any preprocessing.
+CRITICAL: Never use raw Unicode characters. Replace ALL Greek/math symbols with LaTeX commands:
+μ→$\\mu$, α→$\\alpha$, β→$\\beta$, σ→$\\sigma$, θ→$\\theta$, λ→$\\lambda$,
+ε→$\\epsilon$, δ→$\\delta$, γ→$\\gamma$, ∈→$\\in$, ≤→$\\leq$, ≥→$\\geq$,
+×→$\\times$, →→$\\rightarrow$, ∞→$\\infty$, ≈→$\\approx$, ±→$\\pm$`
 
 export function buildSurveyPrompt(topic: string, papers: Paper[]): string {
   const paperList = papers
@@ -29,8 +33,8 @@ APPROVED PACKAGES ONLY:
 \\usepackage{geometry}
 \\usepackage{booktabs}
 \\usepackage{xcolor}
-\\usepackage{microtype}
 \\usepackage{url}
+DO NOT use microtype — it causes font expansion errors on the compile server.
 
 DOCUMENT STRUCTURE (follow exactly):
 1. \\documentclass[12pt,a4paper]{article}
@@ -121,7 +125,6 @@ ${escapeTex(authors)}.
 \\usepackage[hidelinks]{hyperref}
 \\usepackage{geometry}
 \\usepackage{booktabs}
-\\usepackage{microtype}
 \\geometry{margin=1in}
 
 \\title{A Survey of ${safeTitle}}
@@ -159,6 +162,69 @@ ${bibitems}
 
 \\end{document}
 `
+}
+
+// Common Unicode → LaTeX replacements for pdflatex compatibility.
+// Uses \ensuremath so they work in both text and math mode.
+const UNICODE_MAP: [RegExp, string][] = [
+  [/μ/g, '\\ensuremath{\\mu}'],
+  [/α/g, '\\ensuremath{\\alpha}'],
+  [/β/g, '\\ensuremath{\\beta}'],
+  [/γ/g, '\\ensuremath{\\gamma}'],
+  [/δ/g, '\\ensuremath{\\delta}'],
+  [/ε/g, '\\ensuremath{\\epsilon}'],
+  [/ζ/g, '\\ensuremath{\\zeta}'],
+  [/η/g, '\\ensuremath{\\eta}'],
+  [/θ/g, '\\ensuremath{\\theta}'],
+  [/λ/g, '\\ensuremath{\\lambda}'],
+  [/σ/g, '\\ensuremath{\\sigma}'],
+  [/τ/g, '\\ensuremath{\\tau}'],
+  [/φ/g, '\\ensuremath{\\phi}'],
+  [/ψ/g, '\\ensuremath{\\psi}'],
+  [/ω/g, '\\ensuremath{\\omega}'],
+  [/Σ/g, '\\ensuremath{\\Sigma}'],
+  [/Δ/g, '\\ensuremath{\\Delta}'],
+  [/Π/g, '\\ensuremath{\\Pi}'],
+  [/Ω/g, '\\ensuremath{\\Omega}'],
+  [/∈/g, '\\ensuremath{\\in}'],
+  [/∉/g, '\\ensuremath{\\notin}'],
+  [/∀/g, '\\ensuremath{\\forall}'],
+  [/∃/g, '\\ensuremath{\\exists}'],
+  [/≤/g, '\\ensuremath{\\leq}'],
+  [/≥/g, '\\ensuremath{\\geq}'],
+  [/≠/g, '\\ensuremath{\\neq}'],
+  [/≈/g, '\\ensuremath{\\approx}'],
+  [/×/g, '\\ensuremath{\\times}'],
+  [/÷/g, '\\ensuremath{\\div}'],
+  [/±/g, '\\ensuremath{\\pm}'],
+  [/∞/g, '\\ensuremath{\\infty}'],
+  [/→/g, '\\ensuremath{\\rightarrow}'],
+  [/←/g, '\\ensuremath{\\leftarrow}'],
+  [/↔/g, '\\ensuremath{\\leftrightarrow}'],
+  [/⊆/g, '\\ensuremath{\\subseteq}'],
+  [/⊂/g, '\\ensuremath{\\subset}'],
+  [/∪/g, '\\ensuremath{\\cup}'],
+  [/∩/g, '\\ensuremath{\\cap}'],
+  [/√/g, '\\ensuremath{\\sqrt{\\cdot}}'],
+  [/∑/g, '\\ensuremath{\\sum}'],
+  [/∏/g, '\\ensuremath{\\prod}'],
+  [/∫/g, '\\ensuremath{\\int}'],
+  [/·/g, '\\ensuremath{\\cdot}'],
+  [/…/g, '\\ldots{}'],
+  [/—/g, '---'],
+  [/–/g, '--'],
+  [/"/g, '``'],
+  [/"/g, "''"],
+  [/'/g, '`'],
+  [/'/g, "'"],
+]
+
+export function sanitizeLatex(source: string): string {
+  let out = source
+  for (const [pattern, replacement] of UNICODE_MAP) {
+    out = out.replace(pattern, replacement)
+  }
+  return out
 }
 
 export const ARTICLE_TEMPLATE = `\\documentclass[12pt,a4paper]{article}

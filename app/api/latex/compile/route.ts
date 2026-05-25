@@ -7,6 +7,7 @@ import os from 'os'
 import { lintLatex } from '@/lib/latex-lint'
 import { parseLatexLog } from '@/lib/latex-errors'
 import { hasExecutable, isVercel } from '@/lib/runtime'
+import { sanitizeLatex } from '@/lib/latex'
 
 const execAsync = promisify(exec)
 
@@ -17,13 +18,14 @@ const PDFLATEX =
 const COMPILE_SERVICE_URL = process.env.COMPILE_SERVICE_URL?.replace(/\/$/, '')
 
 export async function POST(req: NextRequest) {
-  const { content, filename = 'research' }: { content: string; filename?: string } =
+  const { content: rawContent, filename = 'research' }: { content: string; filename?: string } =
     await req.json()
 
-  if (!content?.trim()) {
+  if (!rawContent?.trim()) {
     return NextResponse.json({ error: 'No LaTeX content provided' }, { status: 400 })
   }
 
+  const content = sanitizeLatex(rawContent)
   const lintErrors = lintLatex(content)
   const criticalLint = lintErrors.filter(e => e.severity === 'error')
   if (criticalLint.length > 0) {
