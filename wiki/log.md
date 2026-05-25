@@ -100,3 +100,4 @@ Append-only. Do not edit entries.
 - `2026-05-25T07:37:09.137Z` saved paper: [[2605.23887]] — CHRONOS: Temporally-Aware Multi-Agent Coordination for Evolving Data Marketplaces
 - `2026-05-25T07:37:34.421Z` saved paper: [[2511.13904]] — Edge Assisted Multi-Camera Vehicle Tracking Framework for Real-Time and Scalable Deployment
 - `2026-05-25T07:37:36.422Z` saved paper: [[2605.23858]] — Anticipating Continued Global Fertility Decline via Neural Forecasting
+- `2026-05-25T07:37:38.142Z` saved paper: [[2605.13930]] — Mechanistic Interpretability of EEG Foundation Models via Sparse Autoencoders
