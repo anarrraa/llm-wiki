@@ -94,3 +94,4 @@ Append-only. Do not edit entries.
 - `2026-05-25T07:20:23.899Z` saved paper: [[2605.23889]] — HorizonStream: Long-Horizon Attention for Streaming 3D Reconstruction
 - `2026-05-25T07:27:01.023Z` saved paper: [[2605.23895]] — From Activation to Causality: Discovery of Causal Visual Representations in the Human Brain
 - `2026-05-25T07:27:03.122Z` saved paper: [[2605.23893]] — Complete-muE: Optimal Hyperparameter Transfer and Scaling for MoE Models
+- `2026-05-25T07:27:04.906Z` saved paper: [[2605.23887]] — CHRONOS: Temporally-Aware Multi-Agent Coordination for Evolving Data Marketplaces
