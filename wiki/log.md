@@ -98,3 +98,4 @@ Append-only. Do not edit entries.
 - `2026-05-25T07:37:04.988Z` saved paper: [[2605.23895]] — From Activation to Causality: Discovery of Causal Visual Representations in the Human Brain
 - `2026-05-25T07:37:07.465Z` saved paper: [[2605.23893]] — Complete-muE: Optimal Hyperparameter Transfer and Scaling for MoE Models
 - `2026-05-25T07:37:09.137Z` saved paper: [[2605.23887]] — CHRONOS: Temporally-Aware Multi-Agent Coordination for Evolving Data Marketplaces
+- `2026-05-25T07:37:34.421Z` saved paper: [[2511.13904]] — Edge Assisted Multi-Camera Vehicle Tracking Framework for Real-Time and Scalable Deployment
