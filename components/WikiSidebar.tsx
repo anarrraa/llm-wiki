@@ -1,29 +1,9 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import {
-  Article,
-  Lightbulb,
-  TreeStructure,
-  Atom,
-  Flask,
-  Gear,
-  User,
-  BookOpen,
-  Circle,
-} from '@phosphor-icons/react'
+import { Circle } from '@phosphor-icons/react'
 import { useResearchStore } from '@/store/researchStore'
-
-const ENTITY_META = [
-  { key: 'papers',      label: 'Papers',      Icon: Article,       color: '#60a5fa' },
-  { key: 'concepts',    label: 'Concepts',    Icon: Lightbulb,     color: '#a78bfa' },
-  { key: 'topics',      label: 'Topics',      Icon: TreeStructure, color: '#34d399' },
-  { key: 'ideas',       label: 'Ideas',       Icon: Atom,          color: '#fbbf24' },
-  { key: 'experiments', label: 'Experiments', Icon: Flask,         color: '#f87171' },
-  { key: 'methods',     label: 'Methods',     Icon: Gear,          color: '#a3e635' },
-  { key: 'people',      label: 'People',      Icon: User,          color: '#fb923c' },
-  { key: 'foundations', label: 'Foundations', Icon: BookOpen,      color: '#e879f9' },
-]
+import { ENTITY_META } from '@/lib/wiki-entities'
 
 interface Props {
   recent: Array<{ slug: string; title: string; date: string }>
@@ -31,6 +11,8 @@ interface Props {
 
 export function WikiSidebar({ recent }: Props) {
   const stats = useResearchStore((s) => s.wikiStats)
+  const wikiView = useResearchStore((s) => s.wikiView)
+  const setWikiView = useResearchStore((s) => s.setWikiView)
 
   return (
     <aside
@@ -67,14 +49,25 @@ export function WikiSidebar({ recent }: Props) {
         <div className="flex flex-col gap-0.5">
           {ENTITY_META.map(({ key, label, Icon, color }, i) => {
             const count = stats ? (stats as unknown as Record<string, number>)[key] ?? 0 : null
+            const isActive = wikiView.type !== 'search' && 'kind' in wikiView && wikiView.kind === key
             return (
               <motion.div
                 key={key}
                 initial={{ opacity: 0, x: -8 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: i * 0.04, duration: 0.2 }}
-                className="flex items-center gap-2 px-2 py-1.5 rounded-md cursor-default group"
-                style={{ color: 'var(--color-text-muted)' }}
+                onClick={() => setWikiView({ type: 'wiki-list', kind: key })}
+                className="flex items-center gap-2 px-2 py-1.5 rounded-md cursor-pointer group transition-colors"
+                style={{
+                  color: isActive ? 'var(--color-text)' : 'var(--color-text-muted)',
+                  background: isActive ? 'var(--color-surface-2)' : 'transparent',
+                }}
+                onMouseEnter={(e) => {
+                  if (!isActive) (e.currentTarget as HTMLElement).style.background = 'var(--color-surface)'
+                }}
+                onMouseLeave={(e) => {
+                  if (!isActive) (e.currentTarget as HTMLElement).style.background = 'transparent'
+                }}
               >
                 <Icon size={14} style={{ color, flexShrink: 0 }} />
                 <span className="text-xs flex-1">{label}</span>
@@ -105,7 +98,10 @@ export function WikiSidebar({ recent }: Props) {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.3 + i * 0.04 }}
-                  className="px-2 py-1.5 rounded cursor-default"
+                  onClick={() => setWikiView({ type: 'wiki-entry', kind: 'papers', slug: p.slug })}
+                  className="px-2 py-1.5 rounded cursor-pointer transition-colors"
+                  onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = 'var(--color-surface)' }}
+                  onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = 'transparent' }}
                 >
                   <p className="text-xs leading-tight line-clamp-2" style={{ color: 'var(--color-text-muted)' }}>
                     {p.title}

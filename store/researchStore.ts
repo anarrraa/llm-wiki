@@ -35,6 +35,11 @@ export interface Facets {
 
 type Status = 'idle' | 'searching' | 'generating' | 'compiling' | 'done' | 'error'
 
+export type WikiViewMode =
+  | { type: 'search' }
+  | { type: 'wiki-list'; kind: string }
+  | { type: 'wiki-entry'; kind: string; slug: string }
+
 interface ResearchStore {
   topic: string
   papers: Paper[]
@@ -47,6 +52,7 @@ interface ResearchStore {
   error: string | null
   wikiStats: WikiStats | null
   activeTab: 'source' | 'preview'
+  wikiView: WikiViewMode
 
   setTopic: (topic: string) => void
   setPapers: (papers: Paper[]) => void
@@ -61,6 +67,7 @@ interface ResearchStore {
   setError: (error: string | null) => void
   setWikiStats: (stats: WikiStats) => void
   setActiveTab: (tab: 'source' | 'preview') => void
+  setWikiView: (view: WikiViewMode) => void
 }
 
 export const useResearchStore = create<ResearchStore>((set, get) => ({
@@ -75,6 +82,7 @@ export const useResearchStore = create<ResearchStore>((set, get) => ({
   error: null,
   wikiStats: null,
   activeTab: 'source',
+  wikiView: { type: 'search' },
 
   setTopic: (topic) => set({ topic }),
   setPapers: (papers) => set({ papers }),
@@ -99,4 +107,5 @@ export const useResearchStore = create<ResearchStore>((set, get) => ({
   setError: (error) => set({ error }),
   setWikiStats: (wikiStats) => set({ wikiStats }),
   setActiveTab: (activeTab) => set({ activeTab }),
+  setWikiView: (wikiView) => set({ wikiView }),
 }))

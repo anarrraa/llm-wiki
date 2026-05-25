@@ -6,6 +6,8 @@ import { useResearchStore } from '@/store/researchStore'
 import { WikiSidebar } from './WikiSidebar'
 import { ResearchPanel } from './ResearchPanel'
 import { LatexWorkspace } from './LatexWorkspace'
+import { WikiListPanel } from './WikiListPanel'
+import { WikiEntryPanel } from './WikiEntryPanel'
 
 async function fetchWikiData() {
   const res = await fetch('/api/wiki')
@@ -15,6 +17,7 @@ async function fetchWikiData() {
 
 export function ResearchWorkspace() {
   const setWikiStats = useResearchStore((s) => s.setWikiStats)
+  const wikiView = useResearchStore((s) => s.wikiView)
 
   const { data } = useQuery({
     queryKey: ['wiki-stats'],
@@ -32,7 +35,13 @@ export function ResearchWorkspace() {
       style={{ gridTemplateColumns: '220px 1fr 480px' }}
     >
       <WikiSidebar recent={data?.recent ?? []} />
-      <ResearchPanel />
+      {wikiView.type === 'search' ? (
+        <ResearchPanel />
+      ) : wikiView.type === 'wiki-list' ? (
+        <WikiListPanel kind={wikiView.kind} />
+      ) : (
+        <WikiEntryPanel kind={wikiView.kind} slug={wikiView.slug} />
+      )}
       <LatexWorkspace />
     </div>
   )

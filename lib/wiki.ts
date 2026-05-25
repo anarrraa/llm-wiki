@@ -1,5 +1,6 @@
 import { readdir, readFile, writeFile } from 'fs/promises'
 import path from 'path'
+import matter from 'gray-matter'
 import type { Paper, WikiStats } from '@/store/researchStore'
 import { canWriteProjectFiles, hasGitHubConfig } from '@/lib/runtime'
 import { ghListDir, ghReadFile, ghWriteFile, ghAppendFile, ghGetFile } from '@/lib/github-wiki'
@@ -177,4 +178,76 @@ export async function getRecentPapers(limit = 10): Promise<Array<{ slug: string;
       }
     })
   )
+}
+
+// ─── Entity browser ───────────────────────────────────────────────────────────
+
+export interface WikiEntry {
+  slug: string
+  title: string
+  date: string
+  frontmatter: Record<string, unknown>
+}
+
+export interface WikiEntryDetail extends WikiEntry {
+  kind: string
+  body: string
+  raw: string
+}
+
+export async function getEntityList(kind: string): Promise<WikiEntry[]> {
+  if (hasGitHubConfig()) {
+    const files = await ghListDir(`wiki/${kind}`)
+    const mdFiles = files.filter((f) => f.endsWith('.md') && f !== '.gitkeep')
+    return Promise.all(
+      mdFiles.map(async (f) => {
+        const raw = await ghReadFile(`wiki/${kind}/${f}`).catch(() => '')
+        const { data } = matter(raw ?? '')
+        return {
+          slug: f.replace('.md', ''),
+          title: String(data.title ?? f.replace('.md', '')),
+          date: String(data.added ?? data.published ?? ''),
+          frontmatter: data,
+        }
+      })
+    )
+  }
+
+  const dir = path.join(WIKI_ROOT, kind)
+  const files = await readdir(dir).catch(() => [])
+  const mdFiles = files.filter((f) => f.endsWith('.md') && f !== '.gitkeep')
+  return Promise.all(
+    mdFiles.map(async (f) => {
+      const raw = await readFile(path.join(dir, f), 'utf-8').catch(() => '')
+      const { data } = matter(raw)
+      return {
+        slug: f.replace('.md', ''),
+        title: String(data.title ?? f.replace('.md', '')),
+        date: String(data.added ?? data.published ?? ''),
+        frontmatter: data,
+      }
+    })
+  )
+}
+
+export async function getEntityEntry(kind: string, slug: string): Promise<WikiEntryDetail | null> {
+  let raw: string | null = null
+
+  if (hasGitHubConfig()) {
+    raw = await ghReadFile(`wiki/${kind}/${slug}.md`).catch(() => null)
+  } else {
+    raw = await readFile(path.join(WIKI_ROOT, kind, `${slug}.md`), 'utf-8').catch(() => null)
+  }
+
+  if (!raw) return null
+  const { data, content } = matter(raw)
+  return {
+    slug,
+    kind,
+    title: String(data.title ?? slug),
+    date: String(data.added ?? data.published ?? ''),
+    frontmatter: data,
+    body: content,
+    raw,
+  }
 }
