@@ -88,3 +88,5 @@ Append-only. Do not edit entries.
 - `2026-05-19T08:55:52.457Z` saved paper: [[2504.15909]] — Synergizing RAG and Reasoning: A Systematic Review
 - `2026-05-24T11:53:50Z` draft | llm-wiki-system-architecture | output: public/output/llm-wiki-system-architecture.pdf
 - 2026-05-25T03:23:28Z draft | research-gaps | output: public/output/research-gaps.pdf | gaps: 8 | refs: 22 | pages: 20
+
+- `2026-05-25T07:14:49.309Z` saved paper: [[2605.23892]] — Good Token Hunting: A Hitchhiker's Guide to Token Selection for Visual Geometry Transformers
