@@ -47,18 +47,29 @@ export async function ghWriteFile(
   commitMessage: string,
   sha?: string
 ): Promise<void> {
-  const body: Record<string, string> = {
-    message: commitMessage,
-    content: Buffer.from(content, 'utf-8').toString('base64'),
-    branch: branch(),
-  }
-  if (sha) body.sha = sha
+  const encodedContent = Buffer.from(content, 'utf-8').toString('base64')
 
-  const res = await fetch(`${GH_API}/repos/${repo()}/contents/${filePath}`, {
-    method: 'PUT',
-    headers: headers(),
-    body: JSON.stringify(body),
-  })
+  const doPut = async (currentSha: string | undefined) => {
+    const body: Record<string, string> = {
+      message: commitMessage,
+      content: encodedContent,
+      branch: branch(),
+    }
+    if (currentSha) body.sha = currentSha
+    return fetch(`${GH_API}/repos/${repo()}/contents/${filePath}`, {
+      method: 'PUT',
+      headers: headers(),
+      body: JSON.stringify(body),
+    })
+  }
+
+  let res = await doPut(sha)
+
+  // 409 = SHA mismatch — файл хоорондоо update болсон, шинэ SHA авч дахин оролд
+  if (res.status === 409) {
+    const fresh = await ghGetFile(filePath)
+    res = await doPut(fresh?.sha)
+  }
 
   if (!res.ok) {
     const err = await res.json().catch(() => ({})) as { message?: string }
