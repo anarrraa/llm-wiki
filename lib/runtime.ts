@@ -3,8 +3,13 @@ import { constants } from 'fs'
 
 export const isVercel = process.env.VERCEL === '1'
 
+export function hasGitHubConfig(): boolean {
+  return !!(process.env.GITHUB_TOKEN && process.env.GITHUB_REPO)
+}
+
 export function canWriteProjectFiles(): boolean {
-  return !isVercel
+  if (isVercel) return hasGitHubConfig()
+  return true
 }
 
 export async function hasExecutable(pathname: string | undefined): Promise<boolean> {
