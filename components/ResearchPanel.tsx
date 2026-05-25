@@ -14,7 +14,10 @@ import {
   Plus,
   CaretDown,
   CaretRight,
+  Check,
+  Warning,
 } from '@phosphor-icons/react'
+import { useQueryClient } from '@tanstack/react-query'
 import { useResearchStore, type Paper } from '@/store/researchStore'
 import { PaperCard } from './PaperCard'
 import { FacetBar } from './FacetBar'
@@ -45,10 +48,13 @@ export function ResearchPanel() {
   const [similarOpen, setSimilarOpen] = useState(false)
   const [wikiSlugs, setWikiSlugs] = useState<Set<string>>(new Set())
   const [wikiResults, setWikiResults] = useState<Array<{ slug: string; title: string; arxivId: string }>>([])
+  const [isSaving, setIsSaving] = useState(false)
+  const [saveToast, setSaveToast] = useState<{ ok: boolean; msg: string } | null>(null)
   const inputRef = useRef<HTMLInputElement>(null)
   const similarDebounceRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const wikiSearchDebounceRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const lastSelectedRef = useRef<string | null>(null)
+  const queryClient = useQueryClient()
 
   useEffect(() => {
     const id = setInterval(() => {
@@ -192,29 +198,43 @@ export function ResearchPanel() {
   }, [papers, selectedIds, topic, setStatus, setError, setLatex, setActiveTab])
 
   const saveSelected = useCallback(async () => {
+    const selected = papers.filter((p) => selectedIds.has(p.id))
+    if (!selected.length) return
+    setIsSaving(true)
+    setSaveToast(null)
+    setError(null)
+
+    let saved = 0
+    const newSlugs = new Set(wikiSlugs)
+
     try {
-      setError(null)
-      const selected = papers.filter((p) => selectedIds.has(p.id))
-      const responses = await Promise.all(
-        selected.map((p) =>
-          fetch('/api/wiki', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(p),
-          })
-        )
-      )
+      // Sequential — avoid concurrent appendLog SHA collisions
+      for (const p of selected) {
+        const res = await fetch('/api/wiki', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(p),
+        })
+        if (!res.ok) {
+          const data = await res.json().catch(() => ({ error: 'Save failed' }))
+          throw new Error(data.error ?? 'Save failed')
+        }
+        const { slug } = await res.json()
+        if (slug) newSlugs.add(slug)
+        saved++
+      }
 
-      const failed = responses.find((res) => !res.ok)
-      if (!failed) return
-
-      const data = await failed.json().catch(() => ({ error: 'Save failed' }))
-      throw new Error(data.error ?? 'Save failed')
+      setWikiSlugs(newSlugs)
+      queryClient.invalidateQueries({ queryKey: ['wiki-stats'] })
+      setSaveToast({ ok: true, msg: `Saved ${saved} paper${saved !== 1 ? 's' : ''} to wiki` })
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Save failed')
-      setStatus('error')
+      const msg = err instanceof Error ? err.message : 'Save failed'
+      setSaveToast({ ok: false, msg })
+    } finally {
+      setIsSaving(false)
+      setTimeout(() => setSaveToast(null), 4000)
     }
-  }, [papers, selectedIds, setError, setStatus])
+  }, [papers, selectedIds, wikiSlugs, queryClient, setError])
 
   const addSimilarPaper = useCallback(
     (paper: Paper) => {
@@ -229,6 +249,7 @@ export function ResearchPanel() {
   const isSearching = status === 'searching'
   const isGenerating = status === 'generating'
   const selectedCount = selectedIds.size
+  const isBusy = isSaving || isGenerating
 
   return (
     <main
@@ -335,16 +356,17 @@ export function ResearchPanel() {
               <>
                 <button
                   onClick={saveSelected}
-                  className="flex items-center gap-1.5 text-xs transition-opacity hover:opacity-80"
+                  disabled={isBusy}
+                  className="flex items-center gap-1.5 text-xs transition-opacity hover:opacity-80 disabled:opacity-40"
                   style={{ color: 'var(--color-text-muted)' }}
                 >
-                  <FloppyDisk size={14} />
-                  Save to wiki
+                  <FloppyDisk size={14} className={isSaving ? 'animate-pulse' : ''} />
+                  {isSaving ? 'Saving…' : 'Save to wiki'}
                 </button>
 
                 <button
                   onClick={generate}
-                  disabled={isGenerating}
+                  disabled={isBusy}
                   className="flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-medium transition-all duration-150 active:scale-[0.97] disabled:opacity-50"
                   style={{
                     background: isGenerating ? 'var(--color-surface-2)' : 'var(--color-accent-glow)',
@@ -357,6 +379,26 @@ export function ResearchPanel() {
                 </button>
               </>
             )}
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Save toast */}
+      <AnimatePresence>
+        {saveToast && (
+          <motion.div
+            initial={{ opacity: 0, y: -6 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -6 }}
+            className="flex items-center gap-2 px-5 py-2 border-b text-xs"
+            style={{
+              borderColor: 'var(--color-border)',
+              background: saveToast.ok ? 'rgba(52,211,153,0.06)' : 'rgba(248,113,113,0.06)',
+              color: saveToast.ok ? '#34d399' : '#f87171',
+            }}
+          >
+            {saveToast.ok ? <Check size={12} weight="bold" /> : <Warning size={12} weight="bold" />}
+            {saveToast.msg}
           </motion.div>
         )}
       </AnimatePresence>
