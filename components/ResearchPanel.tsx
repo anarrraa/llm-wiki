@@ -192,17 +192,29 @@ export function ResearchPanel() {
   }, [papers, selectedIds, topic, setStatus, setError, setLatex, setActiveTab])
 
   const saveSelected = useCallback(async () => {
-    const selected = papers.filter((p) => selectedIds.has(p.id))
-    await Promise.all(
-      selected.map((p) =>
-        fetch('/api/wiki', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(p),
-        })
+    try {
+      setError(null)
+      const selected = papers.filter((p) => selectedIds.has(p.id))
+      const responses = await Promise.all(
+        selected.map((p) =>
+          fetch('/api/wiki', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(p),
+          })
+        )
       )
-    )
-  }, [papers, selectedIds])
+
+      const failed = responses.find((res) => !res.ok)
+      if (!failed) return
+
+      const data = await failed.json().catch(() => ({ error: 'Save failed' }))
+      throw new Error(data.error ?? 'Save failed')
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Save failed')
+      setStatus('error')
+    }
+  }, [papers, selectedIds, setError, setStatus])
 
   const addSimilarPaper = useCallback(
     (paper: Paper) => {

@@ -1,6 +1,7 @@
 import { readdir, readFile, writeFile, mkdir } from 'fs/promises'
 import path from 'path'
 import type { Paper, WikiStats } from '@/store/researchStore'
+import { canWriteProjectFiles } from '@/lib/runtime'
 
 const S2_BASE = 'https://api.semanticscholar.org/graph/v1'
 
@@ -30,6 +31,10 @@ function slugify(title: string): string {
 }
 
 export async function savePaperToWiki(paper: Paper): Promise<string> {
+  if (!canWriteProjectFiles()) {
+    throw new Error('Wiki saving is disabled on Vercel. Connect persistent storage before enabling writes.')
+  }
+
   const slug = paper.arxivId ? paper.arxivId.replace('/', '-') : slugify(paper.title)
   const filePath = path.join(WIKI_ROOT, 'papers', `${slug}.md`)
 

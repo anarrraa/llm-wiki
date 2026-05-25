@@ -48,7 +48,6 @@ entity_dirs:
   - methods
   - people
   - foundations
-  - Summary
 
 importance_scale:
   0: "unrated"

@@ -6,6 +6,7 @@ import path from 'path'
 import os from 'os'
 import { lintLatex } from '@/lib/latex-lint'
 import { parseLatexLog } from '@/lib/latex-errors'
+import { hasExecutable, isVercel } from '@/lib/runtime'
 
 const execAsync = promisify(exec)
 
@@ -25,6 +26,26 @@ export async function POST(req: NextRequest) {
   const criticalLint = lintErrors.filter(e => e.severity === 'error')
   if (criticalLint.length > 0) {
     return NextResponse.json({ success: false, lintErrors })
+  }
+
+  if (isVercel) {
+    return NextResponse.json(
+      {
+        success: false,
+        error: 'LaTeX compilation is disabled on Vercel. Use local development for PDF compile.',
+      },
+      { status: 501 }
+    )
+  }
+
+  if (!(await hasExecutable(PDFLATEX))) {
+    return NextResponse.json(
+      {
+        success: false,
+        error: `pdflatex not found or not executable at: ${PDFLATEX}`,
+      },
+      { status: 500 }
+    )
   }
 
   const safe = filename.replace(/[^a-zA-Z0-9_-]/g, '_').slice(0, 40)

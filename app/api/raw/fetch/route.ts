@@ -1,12 +1,20 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { writeFile, mkdir } from 'fs/promises'
 import path from 'path'
+import { canWriteProjectFiles } from '@/lib/runtime'
 
 export async function POST(req: NextRequest) {
   const { url, type = 'web' }: { url: string; type?: 'web' | 'paper' } = await req.json()
 
   if (!url) {
     return NextResponse.json({ error: 'url required' }, { status: 400 })
+  }
+
+  if (!canWriteProjectFiles()) {
+    return NextResponse.json(
+      { error: 'Raw source saving is disabled on Vercel. Connect persistent storage before enabling this route.' },
+      { status: 501 }
+    )
   }
 
   try {
