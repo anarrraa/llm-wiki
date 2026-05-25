@@ -14,6 +14,8 @@ const PDFLATEX =
   process.env.PDFLATEX_PATH ??
   '/usr/local/texlive/2026basic/bin/universal-darwin/pdflatex'
 
+const COMPILE_SERVICE_URL = process.env.COMPILE_SERVICE_URL?.replace(/\/$/, '')
+
 export async function POST(req: NextRequest) {
   const { content, filename = 'research' }: { content: string; filename?: string } =
     await req.json()
@@ -28,11 +30,16 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ success: false, lintErrors })
   }
 
+  // Railway (эсвэл бусад) гадаад compile сервис байвал тэнд дамжуулна
+  if (COMPILE_SERVICE_URL) {
+    return compileViaService(COMPILE_SERVICE_URL, content, filename, lintErrors)
+  }
+
   if (isVercel) {
     return NextResponse.json(
       {
         success: false,
-        error: 'LaTeX compilation is disabled on Vercel. Use local development for PDF compile.',
+        error: 'LaTeX compilation requires COMPILE_SERVICE_URL env var on Vercel.',
       },
       { status: 501 }
     )
@@ -95,4 +102,46 @@ async function cleanup(dir: string) {
     const { rm } = await import('fs/promises')
     await rm(dir, { recursive: true, force: true })
   } catch {}
+}
+
+// Railway (эсвэл бусад гадаад) сервисрүү дамжуулж compile хийх.
+// Сервис base64 PDF буцаана → data URL болгон хувиргаж хариу өгнө.
+async function compileViaService(
+  serviceUrl: string,
+  content: string,
+  filename: string,
+  lintErrors: ReturnType<typeof lintLatex>
+): Promise<NextResponse> {
+  let resp: Response
+  try {
+    resp = await fetch(`${serviceUrl}/compile`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ content, filename }),
+      signal: AbortSignal.timeout(120_000),
+    })
+  } catch (err) {
+    return NextResponse.json(
+      { success: false, error: `Compile service unreachable: ${String(err)}` },
+      { status: 502 }
+    )
+  }
+
+  const data = await resp.json() as { success: boolean; pdfBase64?: string; log?: string }
+
+  if (!data.success || !data.pdfBase64) {
+    const parsedErrors = data.log ? parseLatexLog(data.log) : []
+    return NextResponse.json(
+      { success: false, log: data.log ?? '', lintErrors: [], parsedErrors },
+      { status: 422 }
+    )
+  }
+
+  // data URL болгон хувиргана — frontend-д ямар ч өөрчлөлт хэрэггүй
+  const pdfUrl = `data:application/pdf;base64,${data.pdfBase64}`
+  return NextResponse.json({
+    success: true,
+    pdfUrl,
+    lintErrors: lintErrors.filter(e => e.severity !== 'error'),
+  })
 }
